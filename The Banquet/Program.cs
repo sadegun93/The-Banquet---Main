@@ -86,7 +86,7 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Tier1.Conclusion();
+            Tier1.Tier1Conclusion();
 
             Console.WriteLine(Player.intelligence);
             Console.WriteLine(Player.kindness);

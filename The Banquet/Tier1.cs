@@ -46,7 +46,7 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4.Quit");
+            Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4. Quit");
             SetUp.tierChoice[0] = Console.ReadLine();
 
             if (string.IsNullOrEmpty(SetUp.tierChoice[0]))

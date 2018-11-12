@@ -9,21 +9,11 @@ namespace The_Banquet
     public static class Tier1
     {
 
-        //These ints will be used to keep track of what the player did in each tier so they can be referenced later.
-        //Their naming scheme is as thus:
-        //tXo- Tier X Outcome
-        //t1s = Tier 1 Outcome
-        public static int t1o;
-
-        public static string tier1choice;
-        //Int that holds the player's choice of what they want to do for tier 1
-        public static int tier1choicenum;
-
         //keeps track of what tapestry the player chooses to take.
         public static string tapestryString;
         public static int tapestry;
 
-        public static int Introduction()
+        public static int Tier1Introduction()
         {
 
             //Creates an instance of the Random Class to be used to select scenario at random if player enters invalid choice
@@ -56,22 +46,22 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\nOr\n3. Heed the merchant’s summons and see what he has to offer.");
-            tier1choice = Console.ReadLine();
+            Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4.Quit");
+            SetUp.tierChoice[0] = Console.ReadLine();
 
-            if (string.IsNullOrEmpty(tier1choice))
+            if (string.IsNullOrEmpty(SetUp.tierChoice[0]))
             {
-                tier1choicenum = ScenarioSelection.Next(1, 4);
+                SetUp.tierChoiceNum[0] = ScenarioSelection.Next(1, 4);
             }
 
-            bool res = int.TryParse(tier1choice, out tier1choicenum);
+            bool res = int.TryParse(SetUp.tierChoice[0], out SetUp.tierChoiceNum[0]);
 
             if (res != true)
             {
-                tier1choicenum = ScenarioSelection.Next(1, 4);
+                SetUp.tierChoiceNum[0] = ScenarioSelection.Next(1, 4);
             }
 
-            return tier1choicenum;
+            return SetUp.tierChoiceNum[0];
         }
 
         public static int Scenario1(string playerName)
@@ -296,22 +286,49 @@ namespace The_Banquet
             return Player.intelligence;
         }
 
+        public static void PlayTier1()
+        {
+            switch (SetUp.tierChoiceNum[0])
+            {
+                case 1:
+                    Scenario1(Player.playerName);
+                    break;
+                case 2:
+                    Scenario2(Player.playerName);
+                    break;
+                case 3:
+                    Scenario3Pt1(Player.playerName);
+                    Scenario3Pt2(Player.playerName);
+                    break;
+                case 4:
+                    SetUp.QuitGame();
+                    break;
+                default:
+                    SetUp.QuitGame();
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
         public static int Conclusion()
         {
             Console.WriteLine("You exit the market. After the time you spent browsing, more of the city's residents have started their days,\nand the streets have gotten a bit more crowded. As you navigate them, you hear your stomach growl. ");
             Console.WriteLine("Up to this point you haven't eaten breakfast. Better late than never to grab some food.");
             Console.WriteLine("Finding somewhere to eat would let you explore the city a bit more. You quickly scan the streets,\nand then head off in a random direction in hopes of finding somewhere to eat.");
 
-            switch (tier1choicenum)
+            switch (SetUp.tierChoiceNum[0])
             {
                 case 1:
-                    t1o = 1;
+                    //t1o = 1;
+                    SetUp.TierOutcome[0] = 1;
                     break;
                 case 2:
-                    t1o = 2;
+                    //t1o = 2;
+                    SetUp.TierOutcome[0] = 2;
                     break;
                 case 3:
-                    t1o = 3;
+                    //t1o = 3;
+                    SetUp.TierOutcome[0] = 3;
                     break;
                 default:
                     Console.WriteLine("I don't know how no Scenario is playing right now, but without that the game can't continue.\nLooks like we'll have to abort.");
@@ -319,7 +336,7 @@ namespace The_Banquet
                     break;
             }
 
-            return t1o;
+            return SetUp.TierOutcome[0];
         }
 
     }

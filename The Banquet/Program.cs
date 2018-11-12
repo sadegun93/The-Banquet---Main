@@ -25,17 +25,10 @@ namespace The_Banquet
             //At the end of the day, during the banquet, players meet with the King, and are rewards depending on what they did.
             //That reward is an ending that is determined by their highest stat at the end of the day.
 
-            //These ints will be used to convert the Tier selections to variables that can be used in the main method.
-            //Their naming scheme is as thus:
-            //tXs- Tier X Scenario
-            //t1s = Tier 1 Scenario
-            int t1s;
-
             int gameColorMain;
-            string playerNameMain;
 
             //Introduction Class Color selection method to let players choose what the game looks like
-            gameColorMain = Introduction.ColorSelection();
+            gameColorMain = SetUp.ColorSelection();
 
             switch (gameColorMain)
             {
@@ -71,48 +64,34 @@ namespace The_Banquet
             Console.WriteLine("--------------------------------------------------------------------------");
 
             //Introduction Class Rules method to let players know how the game works
-            Introduction.Rules();
+            SetUp.Rules();
             Console.ReadLine();
             Console.WriteLine("--------------------------------------------------------------------------");
 
             //Introduction Class Welcome method to introduce players to the game and grab their name
-            playerNameMain = Introduction.Welcome();
+            SetUp.Welcome();
 
             //Console.ReadLine();
-            Console.WriteLine("Ah, yes! Onwards, Lord " + playerNameMain + "! Let us see what awaits you in the Jewel of the Empire!");
+            Console.WriteLine("Ah, yes! Onwards, Lord " + Player.playerName + "! Let us see what awaits you in the Jewel of the Empire!");
             Console.WriteLine("In this beautiful city of Ferenicia!");
 
             Console.ReadLine();
 
-            t1s = Tier1.Introduction();
+            Tier1.Tier1Introduction();
 
             Console.ReadLine();
             //Console.WriteLine(t1s);
 
-            switch (t1s)
-            {
-                case 1:
-                    Tier1.Scenario1(Player.playerName);
-                    break;
-                case 2:
-                    Tier1.Scenario2(Player.playerName);
-                    break;
-                case 3:
-                    Tier1.Scenario3Pt1(Player.playerName);
-                    Tier1.Scenario3Pt2(Player.playerName);
-                    break;
-                default:
-                    Console.WriteLine("I don't know how no Scenario is playing right now, but without that the game can't continue.\nLooks like we'll have to abort.");
-                    Environment.Exit(0);
-                    break;
-            }
+            Tier1.PlayTier1();
 
             Console.ReadLine();
 
             Tier1.Conclusion();
 
             Console.WriteLine(Player.intelligence);
-            Console.WriteLine(Tier1.t1o);
+            Console.WriteLine(Player.kindness);
+            Console.WriteLine(Player.boldness);
+            Console.WriteLine(SetUp.TierOutcome[0]);
             Console.WriteLine(Tier1.tapestry);
 
         }

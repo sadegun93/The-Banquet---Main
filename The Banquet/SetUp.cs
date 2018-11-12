@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace The_Banquet
 {
-    class Introduction
+    public static class SetUp
     {   //Color Selection variables
         public static string colorstring;
         public static int gameColor;
+        public static bool tryGameColor;
 
         //Ready to play variables
         static string ready;
         static char readychar;
+
+        //String Array to save the choices players make for each of the tiers rather than making 6 different variables
+        public static string[] tierChoice = new string[6];
+        //Int Array to save the choices players make for each of the tiers rather than making 6 different variables
+        public static int[] tierChoiceNum = new int[6];
+        //Int Array to save the outcomes of each tier, assuming they will be referenced later
+        //These ints will be used to keep track of what the player did in each tier so they can be referenced later.
+        public static int[] TierOutcome = new int[6];
 
         //Players are given one of four options, and then their choice is converted to an int.
         //A switch statement will assign a color to the game depending on their choice.
@@ -34,14 +43,34 @@ namespace The_Banquet
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("4. Black on white");
             Console.WriteLine("Only input the number of your preferred choice: 1 - 4.");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
             colorstring = Console.ReadLine();
+            tryGameColor = int.TryParse(colorstring, out gameColor);
 
-            if (string.IsNullOrEmpty(colorstring))
+            while(tryGameColor != true || string.IsNullOrEmpty(colorstring) || gameColor > 4)
             {
-                colorstring = "1";
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Your choice of color was not valid. Please choose:");
+                Console.WriteLine("Standard white on black");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("2. Blue on white");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("3. Red on white");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Or");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("4. Black on white");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                colorstring = Console.ReadLine();
+                tryGameColor = int.TryParse(colorstring, out gameColor);
             }
-
-            gameColor = int.Parse(colorstring);
             return gameColor;
         }
 
@@ -62,18 +91,34 @@ namespace The_Banquet
             Console.Write("Y/N ");
 
             ready = Console.ReadLine();
-            if (string.IsNullOrEmpty(ready))
+            while(string.IsNullOrEmpty(ready))
             {
-                ready = "n";
+                Console.WriteLine("You didn't input anything. We can't have that. Are you ready to play? Y/N");
+                ready = Console.ReadLine();
             }
             ready = ready.ToUpper();
             ready = ready.Trim();
             readychar = ready[0];
 
+            while (ready != "N" && ready != "Y")
+            {
+                Console.WriteLine("You didn't say that you were ready. The game can't start until you do. Are you ready?\nY/N");
+                ready = Console.ReadLine();
+                ready = ready.ToUpper();
+                ready = ready.Trim();
+                while (string.IsNullOrEmpty(ready))
+                {
+                    Console.WriteLine("You didn't input anything. We can't have that. Are you ready to play? Y/N");
+                    ready = Console.ReadLine();
+                }
+                ready = ready.ToUpper();
+                ready = ready.Trim();
+                readychar = ready[0];
+            }
+
             if (readychar != 'Y')
             {
-                Console.WriteLine("You aren't ready? I see.\nIn that case, please come back whenever you are.");
-                Environment.Exit(0);
+                QuitGame();
             }
         }
 
@@ -118,6 +163,12 @@ namespace The_Banquet
             }
 
             return Player.playerName;
+        }
+
+        public static void QuitGame()
+        {
+            Console.WriteLine("I see. That's a shame.\nIn that case, please come back whenever you are ready to.");
+            Environment.Exit(0);
         }
     }
 }

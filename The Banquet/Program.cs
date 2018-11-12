@@ -12,6 +12,7 @@ using System.Threading.Tasks;
  * Progress Made 09/30/2018 - Created Tier1 Class; devised way for scenarios to play out once written
  * Objective for 10/07/2018 - Increment stats for Tier 1
  * Progress Made 10/07/2018 - Finish Tier 1 Scenarios 1, 2, and 3, and created all accompanying variables
+ * Objective for 11/12/2018 - Look at the code and rework it to reflect what I've learned since last workday.
  */
 namespace The_Banquet
 {
@@ -25,40 +26,9 @@ namespace The_Banquet
             //At the end of the day, during the banquet, players meet with the King, and are rewards depending on what they did.
             //That reward is an ending that is determined by their highest stat at the end of the day.
 
-            int gameColorMain;
-
             //Introduction Class Color selection method to let players choose what the game looks like
-            gameColorMain = SetUp.ColorSelection();
-
-            switch (gameColorMain)
-            {
-                case 1:
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-                case 2:
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    break;
-                case 3:
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-                case 4:
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    break;
-                default:
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-            }
-
+            SetUp.ColorSelection();
+            
             //Game Title comes after Color Selection
             Console.WriteLine("Welcome to The Banquet. A wondrous night awaits you after a day of merryment.");
             Console.WriteLine("--------------------------------------------------------------------------");
@@ -72,7 +42,7 @@ namespace The_Banquet
             SetUp.Welcome();
 
             //Console.ReadLine();
-            Console.WriteLine("Ah, yes! Onwards, Lord " + Player.playerName + "! Let us see what awaits you in the Jewel of the Empire!");
+            Console.WriteLine("Ah, yes! Onwards, Lord " + Player.GetPlayerName + "! Let us see what awaits you in the Jewel of the Empire!");
             Console.WriteLine("In this beautiful city of Ferenicia!");
 
             Console.ReadLine();
@@ -88,11 +58,11 @@ namespace The_Banquet
 
             Tier1.Tier1Conclusion();
 
-            Console.WriteLine(Player.intelligence);
-            Console.WriteLine(Player.kindness);
-            Console.WriteLine(Player.boldness);
-            Console.WriteLine(SetUp.TierOutcome[0]);
-            Console.WriteLine(Tier1.tapestry);
+            Console.WriteLine(Player.GetIntelligence);
+            Console.WriteLine(Player.GetKindness);
+            Console.WriteLine(Player.GetBoldness);
+            Console.WriteLine(SetUp.GetTierOutcome[0]);
+            Console.WriteLine(Tier1.GetTapestry);
 
         }
     }

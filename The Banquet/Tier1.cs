@@ -10,8 +10,15 @@ namespace The_Banquet
     {
 
         //keeps track of what tapestry the player chooses to take.
-        public static string tapestryString;
-        public static int tapestry;
+        static string tapestryString;
+        static int tapestry;
+        public static int GetTapestry
+        {
+            get
+            {
+                return tapestry;
+            }
+        }
 
         public static int Tier1Introduction()
         {
@@ -47,21 +54,33 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4. Quit");
-            SetUp.tierChoice[0] = Console.ReadLine();
+            SetUp.GetTierChoice[0] = Console.ReadLine();
 
-            if (string.IsNullOrEmpty(SetUp.tierChoice[0]))
+            while(String.IsNullOrEmpty(SetUp.GetTierChoice[0]))
             {
-                SetUp.tierChoiceNum[0] = ScenarioSelection.Next(1, 4);
+                //Tell player option was empty
+                Console.WriteLine("You didn't choose anything. The game can't continue otherwise.");
+                Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4. Quit");
+                SetUp.GetTierChoice[0] = Console.ReadLine();
             }
 
-            bool res = int.TryParse(SetUp.tierChoice[0], out SetUp.tierChoiceNum[0]);
+            SetUp.SetValidateChoice = int.TryParse(SetUp.GetTierChoice[0], out SetUp.GetTierChoiceNum[0]);
 
-            if (res != true)
+            while(SetUp.GetValidateChoice != true || SetUp.GetTierChoiceNum[0] > 4)
             {
-                SetUp.tierChoiceNum[0] = ScenarioSelection.Next(1, 4);
-            }
+                Console.WriteLine("Your input was invalid. Please choose between your four options.");
 
-            return SetUp.tierChoiceNum[0];
+                SetUp.GetTierChoice[0] = Console.ReadLine();
+                while (String.IsNullOrEmpty(SetUp.GetTierChoice[0]))
+                {
+                    Console.WriteLine("You didn't choose anything. The game can't continue otherwise.");
+                    Console.WriteLine("What will you do?\n1. Check on the teen to make sure they don’t get cheated.\n2. Help the merchant set up and get a start to his day.\n3. Heed the merchant’s summons and see what he has to offer.\nOr\n4. Quit");
+                    SetUp.GetTierChoice[0] = Console.ReadLine();
+                }
+
+                SetUp.SetValidateChoice = int.TryParse(SetUp.GetTierChoice[0], out SetUp.GetTierChoiceNum[0]);
+            }
+            return SetUp.GetTierChoiceNum[0];
         }
 
         public static int Scenario1(string playerName)
@@ -75,10 +94,10 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Arms Dealer: G'mornin' to ya, milord! What brings you here?");
-            Console.WriteLine("\n" + Player.playerName + ": Nothing in particular. I just wanted to see what you had on sale.\nHow about you, lass?");
+            Console.WriteLine("\n" + Player.GetPlayerName + ": Nothing in particular. I just wanted to see what you had on sale.\nHow about you, lass?");
             Console.WriteLine("\nTeen: I-I wanted t' buy an Arm. Help t' keep me family safe, y'see.");
             Console.WriteLine("\nArms Dealer: Aye, and I was just showing 'em what I had to offer! They'd do quite nicely, I think.");
-            Console.WriteLine("\n" + Player.playerName + ": How noble of someone as young as yourself. For as simple a purpose as that,\nyou can't be in the market for anything in particular, can you? Anything should do.");
+            Console.WriteLine("\n" + Player.GetPlayerName + ": How noble of someone as young as yourself. For as simple a purpose as that,\nyou can't be in the market for anything in particular, can you? Anything should do.");
             Console.WriteLine("\nTeen: Yeah.");
 
             Console.ReadLine();
@@ -88,9 +107,9 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Console.WriteLine(Player.playerName + ": Do you know how these work?");
+            Console.WriteLine(Player.GetPlayerName  + ": Do you know how these work?");
             Console.WriteLine("\nTeen: N-not really, no. I just know tha' these 'ere Arms are suppose to be magic.");
-            Console.WriteLine("\n" + Player.playerName + ": You got that right. They run off of Beaststones, born from the remains of wild beasts.\nEach and every one.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": You got that right. They run off of Beaststones, born from the remains of wild beasts.\nEach and every one.");
             Console.WriteLine("\nTeen: So tha' 'ittle stone was an animal once upon a time?");
             Console.WriteLine("\nArms Dealer: Indeed it was, young one! Not a bad one, at that. While they come from great Beasts,\nBeaststones're curious things. Even small ones can come from mighty predators!");
             Console.WriteLine("\nTeen: So it's strong, then?");
@@ -105,7 +124,7 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Console.WriteLine(Player.playerName + ": Shame on you, Arms Dealer.");
+            Console.WriteLine(Player.GetPlayerName  + ": Shame on you, Arms Dealer.");
 
             Console.ReadLine();
 
@@ -114,18 +133,18 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Arms Dealer: What's the matter, milord?");
-            Console.WriteLine("\n" + Player.playerName + ": What's your name, lass?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": What's your name, lass?");
             Console.WriteLine("\nTeen: 'Tis Jordan, sir.");
-            Console.WriteLine("\n" + Player.playerName + ": Well, Jordan. I imagine you've heard of Dragonsbane?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Well, Jordan. I imagine you've heard of Dragonsbane?");
             Console.WriteLine("\nJordan: Ah, I 'ave! That's 'is Majesty's sword!");
-            Console.WriteLine("\n" + Player.playerName + ": It is Dragonsbane that holds great power, but not any of these. At best, you'll singe a thief's sleeve.\nMight spook them a bit, but nothing is stopping them from batting it out.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": It is Dragonsbane that holds great power, but not any of these. At best, you'll singe a thief's sleeve.\nMight spook them a bit, but nothing is stopping them from batting it out.");
             Console.WriteLine("\nJordan: Oh...");
             Console.WriteLine("\nArms Dealer: What're you trying to say, milord? This is still enough to protect the young one's family, isn't it?");
-            Console.WriteLine("\n" + Player.playerName + ": Oh, it should be. If they don't panic, nothing is stopping her from stabbing someone who means her harm.\nThe thing is, none of these blades are worth 200 Dominion. 50 at best.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Oh, it should be. If they don't panic, nothing is stopping her from stabbing someone who means her harm.\nThe thing is, none of these blades are worth 200 Dominion. 50 at best.");
             Console.WriteLine("\nArms Dealer: 50?!");
-            Console.WriteLine("\n" + Player.playerName + ": Aye, 50. Wouldn't you agree, Jordan?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Aye, 50. Wouldn't you agree, Jordan?");
             Console.WriteLine("\nJordan: I guess? I don't know much 'bout these sorts o' things...");
-            Console.WriteLine("\n" + Player.playerName + ": Fair enough. I just want you to know this man is trying to swindle you.\nWhether you buy his Arms or not doesn't matter. Just don't give him 200 Dominion for it.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Fair enough. I just want you to know this man is trying to swindle you.\nWhether you buy his Arms or not doesn't matter. Just don't give him 200 Dominion for it.");
 
             Console.ReadLine();
 
@@ -138,9 +157,9 @@ namespace The_Banquet
             Console.WriteLine("\nArms Dealer: And I said I need to make a profit.");
             Console.WriteLine("\nJordan: I'll do 100.");
             Console.WriteLine("\nArms Dealer: 100! You mean to take my blade for half the price?!");
-            Console.WriteLine("\n" + Player.playerName + ": Well, it's worth a quarter of what you're saying.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Well, it's worth a quarter of what you're saying.");
             Console.WriteLine("\nArms Dealer: I've 'ad enough of you! Now, kindly leave! Clearly ya don't mean to buy anything from me!");
-            Console.WriteLine("\n" + Player.playerName + ": Very well, then. Jordan, I hope you can find yourself walking away from here with a new Arm.\nI wish the best for you and your family.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Very well, then. Jordan, I hope you can find yourself walking away from here with a new Arm.\nI wish the best for you and your family.");
             Console.WriteLine("\nJordan: Thank you sir!");
 
             Console.ReadLine();
@@ -152,8 +171,8 @@ namespace The_Banquet
             Console.WriteLine("Jordan: If I can save some money, maybe I can but something for mum.");
 
 
-            Player.boldness++;
-            return Player.boldness;
+            Player.SetBoldness = Player.GetBoldness + 1;
+            return Player.GetBoldness;
         }
 
         public static int Scenario2(string playerName)
@@ -163,11 +182,11 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: Ah, yes! That would be much appreciated, milord!");
-            Console.WriteLine("\n" + Player.playerName + ": Why, of course.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Why, of course.");
             Console.WriteLine("\nMerchant: Your robes aren't like that of any ordinary person, I see.\nYou must be a knight, or the lord of some fiefdom! What's your name, milord?");
-            Console.WriteLine("\n" + Player.playerName + ": I go by " + Player.playerName + ".");
-            Console.WriteLine("\nMerchant: A Lord " + Player.playerName + ". Don't believe I recognize the name.\nYou must be the humble lord of some small town out east, then.");
-            Console.WriteLine("\n" + Player.playerName + ": My father was granted an estate in Tenebrae for his service to His Majesty.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": I go by " + Player.GetPlayerName  + ".");
+            Console.WriteLine("\nMerchant: A Lord " + Player.GetPlayerName  + ". Don't believe I recognize the name.\nYou must be the humble lord of some small town out east, then.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": My father was granted an estate in Tenebrae for his service to His Majesty.");
             Console.WriteLine("\nMerchant: Ah, Tenebrae! Not too far, that. Curious how I haven't heard of you before.");
 
             Console.ReadLine();
@@ -176,9 +195,9 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Console.WriteLine(Player.playerName + ": These are quite interesting, I must say.");
+            Console.WriteLine(Player.GetPlayerName  + ": These are quite interesting, I must say.");
             Console.WriteLine("\nMerchant: Why thank you, milord. I'm sure you've heard of Sentinel rings, yes?");
-            Console.WriteLine("\n" + Player.playerName + ": Rings that allow those poor unfortunate souls without Mana Lobes to use magic, yes? I've heard of them.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Rings that allow those poor unfortunate souls without Mana Lobes to use magic, yes? I've heard of them.");
 
             Console.ReadLine();
 
@@ -187,9 +206,9 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: This here rings lets you use Water Magic.");
-            Console.WriteLine("\n" + Player.playerName + ": Fascinating.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Fascinating.");
             Console.WriteLine("\nMerchant: I quite like selling these to people. People who so often struggle with magic being able to use it with ease.\nSome of my customers come back and tell me how their rings helped them in their work\nor helped them to defend themselves from some ne'er-do-well.");
-            Console.WriteLine("\n" + Player.playerName + ": Have you ever had people complain about a customer doing anyone harm with your rings?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Have you ever had people complain about a customer doing anyone harm with your rings?");
             Console.WriteLine("\nMerchant: Naturally, not all of my customers are saints. There isn't much I can do about it, can I?\nI sell my Sentinel rings in good faith. If someone betrays that trust and uses my rings for evil,\nit isn't as if I was knowingly selling a dangerous item to a criminal.");
 
             Console.ReadLine();
@@ -207,16 +226,16 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: Thank you again. I would've been stuck for quite a while longer if it weren't for you.\nWhat brings you to the capital, milord?");
-            Console.WriteLine("\n" + Player.playerName + ": I was invited by His Majesty to a banquet in the palace this evening.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": I was invited by His Majesty to a banquet in the palace this evening.");
             Console.WriteLine("\nMerchant: Ah, the banquet! Well, I hope you enjoy it. If you happen to see me before you leave the capital,\ncome and buy something, won't you? I might be willing to slash a few Dominion from the price.");
-            Console.WriteLine("\n" + Player.playerName + ": A most tempting offer. I'll be sure to keep it in mind.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": A most tempting offer. I'll be sure to keep it in mind.");
 
             Console.ReadLine();
 
             Console.WriteLine("You left the merchant to go on your way. As you left him, he called out one final time to thank you.");
 
-            Player.kindness++;
-            return Player.kindness;
+            Player.SetKindness = Player.GetKindness + 1;
+            return Player.GetKindness;
         }
 
         public static int Scenario3Pt1(string playerName)
@@ -228,7 +247,7 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: Well. what do you think, milord? Anything catch your eye?");
-            Console.WriteLine("\n" + Player.playerName + ": Well, I'd have to see them before I can see if I like any of them.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Well, I'd have to see them before I can see if I like any of them.");
 
             Console.ReadLine();
 
@@ -245,9 +264,9 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: They, as historians say, are the \"People of the Lake\".\nBefore their civilization disappeared, they were said to have worshipped the Lord of the Seas, Zybris,\nabove all other Gods, hence the name.");
-            Console.WriteLine("\n" + Player.playerName + ": I've never heard of them. You say they disappeared?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": I've never heard of them. You say they disappeared?");
             Console.WriteLine("\nMerchant: Yes. After all, should you go to that lake nowadays, all you'll find is the Academy; no platform in sight.\nIt's believed that was the secret to reaching their homeland. With it gone, they're gone.");
-            Console.WriteLine("\n" + Player.playerName + ": And no one knows what happened to it or where they are?");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": And no one knows what happened to it or where they are?");
             Console.WriteLine("\nMerchant: Alas, not a soul has a clue.");
 
             Console.ReadLine();
@@ -274,7 +293,7 @@ namespace The_Banquet
             Console.ReadLine();
 
             Console.WriteLine("Merchant: Ah, a fine choice! That'll run you 30 Dominion, milord!");
-            Console.WriteLine("\n" + Player.playerName + ": Here's your money, fine sir. Hopefully you have a fruitful day of business.");
+            Console.WriteLine("\n" + Player.GetPlayerName  + ": Here's your money, fine sir. Hopefully you have a fruitful day of business.");
 
             Console.ReadLine();
 
@@ -282,23 +301,24 @@ namespace The_Banquet
 
             Console.ReadLine();
 
-            Player.intelligence++;
-            return Player.intelligence;
+
+            Player.SetIntelligence = Player.GetIntelligence + 1;
+            return Player.GetIntelligence;
         }
 
         public static void PlayTier1()
         {
-            switch (SetUp.tierChoiceNum[0])
+            switch (SetUp.GetTierChoiceNum[0])
             {
                 case 1:
-                    Scenario1(Player.playerName);
+                    Scenario1(Player.GetPlayerName );
                     break;
                 case 2:
-                    Scenario2(Player.playerName);
+                    Scenario2(Player.GetPlayerName );
                     break;
                 case 3:
-                    Scenario3Pt1(Player.playerName);
-                    Scenario3Pt2(Player.playerName);
+                    Scenario3Pt1(Player.GetPlayerName );
+                    Scenario3Pt2(Player.GetPlayerName );
                     break;
                 case 4:
                     SetUp.QuitGame();
@@ -310,25 +330,25 @@ namespace The_Banquet
             }
         }
 
-        public static int Conclusion()
+        public static int Tier1Conclusion()
         {
             Console.WriteLine("You exit the market. After the time you spent browsing, more of the city's residents have started their days,\nand the streets have gotten a bit more crowded. As you navigate them, you hear your stomach growl. ");
             Console.WriteLine("Up to this point you haven't eaten breakfast. Better late than never to grab some food.");
             Console.WriteLine("Finding somewhere to eat would let you explore the city a bit more. You quickly scan the streets,\nand then head off in a random direction in hopes of finding somewhere to eat.");
 
-            switch (SetUp.tierChoiceNum[0])
+            switch (SetUp.GetTierChoiceNum[0])
             {
                 case 1:
                     //t1o = 1;
-                    SetUp.TierOutcome[0] = 1;
+                    SetUp.GetTierOutcome[0] = 1;
                     break;
                 case 2:
                     //t1o = 2;
-                    SetUp.TierOutcome[0] = 2;
+                    SetUp.GetTierOutcome[0] = 2;
                     break;
                 case 3:
                     //t1o = 3;
-                    SetUp.TierOutcome[0] = 3;
+                    SetUp.GetTierOutcome[0] = 3;
                     break;
                 default:
                     Console.WriteLine("I don't know how no Scenario is playing right now, but without that the game can't continue.\nLooks like we'll have to abort.");
@@ -336,7 +356,7 @@ namespace The_Banquet
                     break;
             }
 
-            return SetUp.TierOutcome[0];
+            return SetUp.GetTierOutcome[0];
         }
 
     }

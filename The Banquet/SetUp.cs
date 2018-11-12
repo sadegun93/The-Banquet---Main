@@ -8,25 +8,75 @@ namespace The_Banquet
 {
     public static class SetUp
     {   //Color Selection variables
-        public static string colorstring;
-        public static int gameColor;
-        public static bool tryGameColor;
+        static string colorstring;
+        static int gameColor;
+        static bool tryGameColor;
+
+        //To validate the player's choice in each tier
+        static bool ValidateChoice;
+        public static bool GetValidateChoice
+        {
+            get
+            {
+                return ValidateChoice;
+            }
+        }
+        public static bool SetValidateChoice
+        {
+            set
+            {
+                ValidateChoice = value;
+            }
+        }
 
         //Ready to play variables
         static string ready;
         static char readychar;
 
         //String Array to save the choices players make for each of the tiers rather than making 6 different variables
-        public static string[] tierChoice = new string[6];
+        static string[] tierChoice = new string[6];
+        public static string[] GetTierChoice
+        {
+            get
+            {
+                return tierChoice;
+            }
+        
+            set
+            {
+                tierChoice = value;
+            }
+        }
+
         //Int Array to save the choices players make for each of the tiers rather than making 6 different variables
-        public static int[] tierChoiceNum = new int[6];
+        static int[] tierChoiceNum = new int[6];
+        public static int[] GetTierChoiceNum
+        {
+            get
+            {
+                return tierChoiceNum;
+            }
+        }
+
         //Int Array to save the outcomes of each tier, assuming they will be referenced later
         //These ints will be used to keep track of what the player did in each tier so they can be referenced later.
-        public static int[] TierOutcome = new int[6];
+        static int[] TierOutcome = new int[6];
+        public static int[] GetTierOutcome
+        {
+            get
+            {
+                return TierOutcome;
+            }
+
+            set
+            {
+                TierOutcome = value;
+            }
+        }
 
         //Players are given one of four options, and then their choice is converted to an int.
         //A switch statement will assign a color to the game depending on their choice.
-        public static int ColorSelection()
+        public static void ColorSelection()
         {
             Console.WriteLine("Before we begin, you can choose to change the color of the console.");
             Console.WriteLine("Your options are:\n1. Standard white on black");
@@ -48,7 +98,7 @@ namespace The_Banquet
             colorstring = Console.ReadLine();
             tryGameColor = int.TryParse(colorstring, out gameColor);
 
-            while(tryGameColor != true || string.IsNullOrEmpty(colorstring) || gameColor > 4)
+            while (tryGameColor != true || string.IsNullOrEmpty(colorstring) || gameColor > 4)
             {
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.White;
@@ -71,7 +121,35 @@ namespace The_Banquet
                 colorstring = Console.ReadLine();
                 tryGameColor = int.TryParse(colorstring, out gameColor);
             }
-            return gameColor;
+
+            switch (gameColor)
+            {
+                case 1:
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case 2:
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case 3:
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case 4:
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    break;
+                default:
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+            }
         }
 
         public static void Rules()
@@ -130,39 +208,66 @@ namespace The_Banquet
             Console.WriteLine("The banquet is tonight. A whole day is ahead of you to do with as you please.\nI wonder, how will you spend it?");
             Console.WriteLine("Now, onwards, Lord...\nWhat is your name exactly, milord?\nIs your name:");
             Console.ReadLine();
-            Console.WriteLine("1. Donovan\n2. Alistair\n3.Rodrick\nOr\n4. Will you choose your own name?\nJust as last time, just the number that matches your answer.");
-            Player.nameSelection = Console.ReadLine();
-
-            switch (Player.nameSelection)
+            Console.WriteLine("1. Donovan\n2. Alistair\n3.Rodrick\n4. Zain\nOr\n5. Will you choose your own name?\nJust as last time, just the number that matches your answer.");
+            Player.SetNameSelection = Console.ReadLine();
+            while (String.IsNullOrEmpty(Player.GetNameSelection))
             {
-                case "1":
-                    Player.playerName = "Donovan";
-                    Console.ReadLine();
-                    break;
-                case "2":
-                    Player.playerName = "Alistair";
-                    Console.ReadLine();
-                    break;
-                case "3":
-                    Player.playerName = "Rodrick";
-                    Console.ReadLine();
-                    break;
-                case "4":
-                    Console.WriteLine("In that case, please enter your name.");
-                    Player.playerName = Console.ReadLine();
-                    Console.ReadLine();
+                Console.WriteLine("You didn't enter a name. You very well can't go about without a name! What is your name, milord?");
+                Console.WriteLine("1. Donovan\n2. Alistair\n3.Rodrick\n4. Zain\nOr\n5. Will you choose your own name?\nJust as last time, just the number that matches your answer.");
+                Player.SetNameSelection = Console.ReadLine();
+            }
 
-                        if(string.IsNullOrEmpty(Player.playerName))
-                        {
-                        Player.playerName = "Zain";
-                        }
+            Player.SetValidateName = int.TryParse(Player.GetNameSelection, out Player.nameSelectionNum);
+
+            while(Player.GetValidateName == false || Player.nameSelectionNum > 5)
+            {
+                Console.WriteLine("Your input was invalid. Please choose one of your five options.");
+                Player.SetNameSelection = Console.ReadLine();
+
+                while (String.IsNullOrEmpty(Player.GetNameSelection))
+                {
+                    Console.WriteLine("You didn't enter a name. You very well can't go about without a name! What is your name, milord?");
+                    Console.WriteLine("1. Donovan\n2. Alistair\n3.Rodrick\n4. Zain\nOr\n5. Will you choose your own name?\nJust as last time, just the number that matches your answer.");
+                    Player.SetNameSelection = Console.ReadLine();
+                }
+
+                Player.SetValidateName = int.TryParse(Player.GetNameSelection, out Player.nameSelectionNum);
+            }
+
+            switch (Player.nameSelectionNum)
+            {
+                case 1:
+                    Player.SetPlayerName = "Donovan";
+                    Console.ReadLine();
+                    break;
+                case 2:
+                    Player.SetPlayerName = "Alistair";
+                    Console.ReadLine();
+                    break;
+                case 3:
+                    Player.SetPlayerName = "Rodrick";
+                    Console.ReadLine();
+                    break;
+                case 4:
+                    Player.SetPlayerName = "Zain";
+                    Console.ReadLine();
+                    break;
+                case 5:
+                    Console.WriteLine("In that case, please enter your name.");
+                    Player.SetPlayerName = Console.ReadLine();
+
+                    while (String.IsNullOrEmpty(Player.GetPlayerName))
+                    {
+                        Console.WriteLine("You didn't enter a name. You very well can't go about without a name! What is your name, milord?");
+                        Player.SetPlayerName = Console.ReadLine();
+                    }
                     break;
                 default:
-                    Player.playerName = "Zain";
+                    Player.SetPlayerName = "Zain";
                     break;
             }
 
-            return Player.playerName;
+            return Player.GetPlayerName;
         }
 
         public static void QuitGame()

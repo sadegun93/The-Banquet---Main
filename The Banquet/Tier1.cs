@@ -35,9 +35,6 @@ namespace The_Banquet
         public static int Tier1Introduction()
         {
 
-            //Creates an instance of the Random Class to be used to select scenario at random if player enters invalid choice
-            Random ScenarioSelection = new Random();
-
             Console.WriteLine("You're fairly tired after your long journey from your home in Tenebrae.");
             Console.WriteLine("The day is young and their is much to see. You won't be able to see everything in a single day\n- that would be impossible -\nbut you'll certainly try to see as much as you can in the hours before the banquet tonight.");
 
